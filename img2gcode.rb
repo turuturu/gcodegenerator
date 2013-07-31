@@ -7,8 +7,8 @@ EXTENSION = '.DNC' #出力ファイルの拡張子
 CANVAS_WIDTH = 297000 #板の横幅
 CANVAS_HEIGHT = 210000 #板の縦幅
 GROUND_ZERO = -200 #基準の高さ(板の表面のZ)
-MAX_DEPTH = 50 #基準の高さから掘る最大の深さ
-CEILING_HEIGHT = 220 #板からドリルを離すときの基準の高さからの距離
+MAX_DEPTH = 500 #基準の高さから掘る最大の深さ
+CEILING_HEIGHT = 1500 #板からドリルを離すときの基準の高さからの距離
 DRILL_RADIUS = 1000 #ドリルの半径
 MAX_BRIGHTNESS = 65535
 #PPM = 0.005 #pixcel per micro mater 1micro materあたりのピクセル数
@@ -30,6 +30,12 @@ def getDepth(brightness)
 end
 def printZ(depth)
   puts "Z" + depth.to_s + "\r\n"
+end
+def printMaxSpeed()
+  puts "G01 Z1000 F10000000" + "\r\n"
+end
+def printNormalSpeed()
+  puts "G01 Z1000 F100000" + "\r\n"
 end
 def printXY(x,y)
   puts "X" + x.to_s + " Y" + y.to_s + "\r\n"
@@ -98,6 +104,9 @@ depthMap.each{|row|
   curpos_y += PIXCEL_WIDTH
   prevDepth = NULL_DEPTH
   printCR()
+  printMaxSpeed()
+  printXY(curpos_x,curpos_y)
+  printNormalSpeed()
 }
 
 printFooter()
