@@ -7,14 +7,14 @@ EXTENSION = '.DNC' #出力ファイルの拡張子
 CANVAS_WIDTH = 297000 #板の横幅
 CANVAS_HEIGHT = 210000 #板の縦幅
 GROUND_ZERO = -200 #基準の高さ(板の表面のZ)
-MAX_DEPTH = 5000 #基準の高さから掘る最大の深さ
-CEILING_HEIGHT = 1200 #板からドリルを離すときの基準の高さからの距離
+MAX_DEPTH = 50 #基準の高さから掘る最大の深さ
+CEILING_HEIGHT = 220 #板からドリルを離すときの基準の高さからの距離
 DRILL_RADIUS = 1000 #ドリルの半径
 MAX_BRIGHTNESS = 65535
 #PPM = 0.005 #pixcel per micro mater 1micro materあたりのピクセル数
-PPM = 0.00065 #pixcel per micro mater 1micro materあたりのピクセル数
+PPM = 0.0065 #pixcel per micro mater 1micro materあたりのピクセル数
 PIXCEL_WIDTH = (1 / PPM).to_i
-NULL_DEPTH = 999999
+NULL_DEPTH = 9999
 
 def milli2micro(mil)
   return mil * 1000
@@ -29,23 +29,23 @@ def getDepth(brightness)
   return (GROUND_ZERO - MAX_DEPTH.to_f * (brightness.to_f / MAX_BRIGHTNESS.to_f)).to_i
 end
 def printZ(depth)
-  puts "Z" + depth.to_s
+  puts "Z" + depth.to_s + "\r\n"
 end
 def printXY(x,y)
-  puts "X" + x.to_s + " Y" + y.to_s
+  puts "X" + x.to_s + " Y" + y.to_s + "\r\n"
 end
 def printHeader
-  puts "G90"
-  puts "G28"
-  puts "G01 Z1000 F999"
-  puts "M03"
-  puts "M00"
+  puts "G90" + "\r\n"
+  puts "G28" + "\r\n"
+  puts "G01 Z1000 F100000" + "\r\n"
+  puts "M03" + "\r\n"
+  puts "M00" + "\r\n"
 end
 def printFooter
-  puts "Z1000 F999"
-  puts "M05"
-  puts "G28"
-  puts "M30"
+  puts "Z1000 F999" + "\r\n"
+  puts "M05" + "\r\n"
+  puts "G28" + "\r\n"
+  puts "M30" + "\r\n"
 end
 def printCR
   printZ(CEILING_HEIGHT)
